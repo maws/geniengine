@@ -1,6 +1,3 @@
-#include <allegro5/allegro.h>
-#include <allegro5/display.h>
-
 #include "GeniEngine/Core.h"
 #include "GeniEngine/World.h"
 
