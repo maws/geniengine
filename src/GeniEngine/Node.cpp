@@ -34,6 +34,11 @@ namespace GeniEngine
 		return nullptr;
 	}
 
+	void Node::draw(ALLEGRO_TRANSFORM transform)
+	{
+
+	}
+
 	ALLEGRO_TRANSFORM Node::getWorldTransform()
 	{
 		ALLEGRO_TRANSFORM transform;

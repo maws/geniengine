@@ -20,6 +20,8 @@ namespace GeniEngine
 		Node* getParent() { return parent_; }
 		void setParent(Node* parent) { parent_ = parent; }
 
+		virtual void draw(ALLEGRO_TRANSFORM transform);
+
 		ALLEGRO_TRANSFORM getWorldTransform();
 		ALLEGRO_TRANSFORM getLocalTransform() { return local_transform_; }
 	private:

@@ -6,6 +6,7 @@ struct ALLEGRO_TIMER;
 
 namespace GeniEngine 
 {
+	class Renderer;
 	class Core
 	{
 	public:
@@ -16,6 +17,7 @@ namespace GeniEngine
 		void run();
 
 	private:
+		Renderer* renderer_;
 		ALLEGRO_DISPLAY* display_;
 		ALLEGRO_EVENT_QUEUE* event_queue_;
 		ALLEGRO_TIMER* timer_;
