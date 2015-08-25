@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <memory>
+#include <allegro5\allegro.h>
 
 namespace GeniEngine
 {
@@ -11,6 +12,7 @@ namespace GeniEngine
 		using NodePtr = std::unique_ptr < Node > ;
 
 		Node();
+		virtual ~Node() {}
 
 		void addChild(NodePtr child);
 		NodePtr removeChild(const Node& node);
@@ -18,8 +20,11 @@ namespace GeniEngine
 		Node* getParent() { return parent_; }
 		void setParent(Node* parent) { parent_ = parent; }
 
+		ALLEGRO_TRANSFORM getWorldTransform();
+		ALLEGRO_TRANSFORM getLocalTransform() { return local_transform_; }
 	private:
 		Node* parent_;
 		std::vector<NodePtr> children_;
+		ALLEGRO_TRANSFORM local_transform_;
 	};
 }

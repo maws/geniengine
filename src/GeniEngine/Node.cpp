@@ -33,4 +33,16 @@ namespace GeniEngine
 
 		return nullptr;
 	}
+
+	ALLEGRO_TRANSFORM Node::getWorldTransform()
+	{
+		ALLEGRO_TRANSFORM transform;
+
+		for (Node* p = parent_; p != nullptr; p = p->getParent())
+		{
+			al_compose_transform(&transform, &p->getLocalTransform());
+		}
+
+		return transform;
+	}
 }
