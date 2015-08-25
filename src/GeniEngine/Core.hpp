@@ -16,9 +16,9 @@ namespace GeniEngine
 		void run();
 
 	private:
-		ALLEGRO_DISPLAY* _display;
-		ALLEGRO_EVENT_QUEUE* _eventQueue;
-		ALLEGRO_TIMER* _timer;
+		ALLEGRO_DISPLAY* display_;
+		ALLEGRO_EVENT_QUEUE* event_queue_;
+		ALLEGRO_TIMER* timer_;
 
 	};
 }

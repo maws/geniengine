@@ -1,5 +1,5 @@
-#include "GeniEngine/Core.h"
-#include "GeniEngine/World.h"
+#include "GeniEngine/Core.hpp"
+#include "GeniEngine/World.hpp"
 
 using namespace GeniEngine;
 

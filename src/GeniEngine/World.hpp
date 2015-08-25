@@ -2,10 +2,10 @@
 
 #include <vector>
 
-#include "Utils\ExpandingArray.h"
-#include "ECS\Entity.h"
-#include "ECS\System.h"
-#include "ECS\Component.h"
+#include "Utils\ExpandingArray.hpp"
+#include "ECS\Entity.hpp"
+#include "ECS\System.hpp"
+#include "ECS\Component.hpp"
 
 namespace GeniEngine
 {
