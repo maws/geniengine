@@ -10,7 +10,8 @@ link_directories(${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/allegro/lib/)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_SOURCE_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 
 
 file(GLOB_RECURSE all_files 
@@ -32,9 +33,13 @@ foreach(f ${all_files})
     source_group("${SRCGR}" FILES ${f})
 endforeach()
 
+set_target_properties(GeniEngine2_Framework PROPERTIES OUTPUT_NAME_DEBUG GeniEngine-Debug)
+set_target_properties(GeniEngine2_Framework PROPERTIES OUTPUT_NAME_RELEASE GeniEngine-Release)
+
 add_definitions(-DALLEGRO_STATICLINK)
 target_link_libraries (GeniEngine2_Framework allegro-5.0.10-monolith-static-md.lib)
 target_link_libraries (GeniEngine2_Framework winmm.lib)
+target_link_libraries (GeniEngine2_Framework gdiplus.lib)
 target_link_libraries (GeniEngine2_Framework psapi.lib)
 target_link_libraries (GeniEngine2_Framework shlwapi.lib)
 target_link_libraries (GeniEngine2_Framework "C:/Program Files (x86)/Windows Kits/8.1/Lib/winv6.3/um/x86/dinput8.lib")

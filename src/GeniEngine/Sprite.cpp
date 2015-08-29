@@ -14,10 +14,11 @@ namespace GeniEngine
 		al_destroy_bitmap(bitmap_);
 	}
 
-	void Sprite::draw(ALLEGRO_TRANSFORM transform)
+	void Sprite::draw()
 	{
-		al_use_transform(&transform);
+		drawChildren();
 
-		al_draw_bitmap(bitmap_, 0.0f, 0.0f, 0);
+		al_use_transform(&getWorldTransform());
+		al_draw_bitmap(bitmap_, 0.0f - 32.0f, 0.0f - 32.0f, 0);
 	}
 }

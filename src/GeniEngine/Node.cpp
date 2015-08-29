@@ -6,14 +6,20 @@ namespace GeniEngine
 {
 	Node::Node()
 	: parent_(nullptr)
+	, x_(0.0f)
+	, y_(0.0f)
+	, theta_(0.0f)
+	, scale_(1.0f)
 	{
-
+		al_identity_transform(&local_transform_);
 	}
 
-	void Node::addChild(NodePtr child)
+	Node* Node::addChild(NodePtr child)
 	{
+		auto ref = child.get();
 		child->setParent(this);
 		children_.push_back(std::move(child));
+		return ref;
 	}
 
 	Node::NodePtr Node::removeChild(const Node& node)
@@ -34,20 +40,28 @@ namespace GeniEngine
 		return nullptr;
 	}
 
-	void Node::draw(ALLEGRO_TRANSFORM transform)
+	void Node::draw()
 	{
+		drawChildren();
+	}
 
+	void Node::drawChildren()
+	{
+		for (auto& i : children_)
+		{
+			i->draw();
+		}
 	}
 
 	ALLEGRO_TRANSFORM Node::getWorldTransform()
 	{
-		ALLEGRO_TRANSFORM transform;
-
+		al_build_transform(&local_transform_, x_, y_, scale_, scale_, theta_);
+		ALLEGRO_TRANSFORM world_transform = local_transform_;
 		for (Node* p = parent_; p != nullptr; p = p->getParent())
 		{
-			al_compose_transform(&transform, &p->getLocalTransform());
+			al_compose_transform(&world_transform, &p->getLocalTransform());
 		}
 
-		return transform;
+		return world_transform;
 	}
 }

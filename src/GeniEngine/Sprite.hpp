@@ -9,10 +9,14 @@ namespace GeniEngine
 	class Sprite : public Node
 	{
 	public:
+		using SpritePtr = std::unique_ptr < Sprite > ;
 		Sprite(const char* path);
 		virtual ~Sprite();
 
-		virtual void draw(ALLEGRO_TRANSFORM transform) override;
+		virtual void draw() override;
+
+	protected:
+		
 
 	private:
 		ALLEGRO_BITMAP* bitmap_;

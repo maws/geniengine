@@ -2,6 +2,7 @@
 
 #include <allegro5\allegro.h>
 #include <allegro5\display.h>
+#include <allegro5\allegro_image.h>
 
 #include "Renderer.hpp"
 
@@ -26,6 +27,8 @@ namespace GeniEngine {
 	void Core::init()
 	{
 		al_init();
+		al_init_image_addon();
+
 		display_ = al_create_display(800, 600);
 		event_queue_ = al_create_event_queue();
 		timer_ = al_create_timer(1 / 60.0);

@@ -1,5 +1,10 @@
 #pragma once
 
+#include "Node.hpp"
+#include "Sprite.hpp"
+
+#define NUM_NODES 400
+
 namespace GeniEngine 
 {
 	class Renderer
@@ -11,6 +16,12 @@ namespace GeniEngine
 		void render();
 
 	private:
+		Node* root_;
+
+		Node* master_;
+		Node* slave_;
+
+		Node* nodes[NUM_NODES];
 
 	};
 }
