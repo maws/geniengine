@@ -56,12 +56,34 @@ namespace GeniEngine {
 	void Core::run()
 	{
 		// Main loop
+		float new_time = 0.0;
+		float old_time = 0.0;
+		float delta_time = 0.0;
+		float frametime = 0.0;
+		float fps = 0;
+		int frames = 0;
 		al_start_timer(timer_);
 		while (true)
 		{
 			ALLEGRO_EVENT ev;
-			al_wait_for_event(event_queue_, &ev);
+			al_get_next_event(event_queue_, &ev);
 
+			// Calculate time
+			old_time = new_time;
+			new_time = static_cast<float>(al_get_time());
+			delta_time = new_time - old_time;
+			
+			// Store frametime in set interval
+			static double acc = 0.0;
+			acc += delta_time;
+			if (acc >= .2f)
+			{
+				frametime = delta_time;
+				fps = frames / new_time;
+				acc -= .2f;
+			}
+			
+			// Handle allegro events
 			if (ev.type == ALLEGRO_EVENT_TIMER)
 			{
 				// TODO: Tick our game and tell it to draw
@@ -75,9 +97,14 @@ namespace GeniEngine {
 				al_identity_transform(&t);
 				al_use_transform(&t);
 				al_draw_text(debug_font_, al_map_rgb(255, 255, 255), 0.0f, 0.0f, 0, "Default Allocator:");
-				al_draw_textf(debug_font_, al_map_rgb(255, 255, 255), 0.0f, 14.0f, 0, "Allocated size: %i bytes", defaultAllocator().getNumAllocatedBytes());
+				al_draw_textf(debug_font_, al_map_rgb(255, 255, 255), 0.0f, 12.0f, 0, "Allocated size: %i bytes", defaultAllocator().getNumAllocatedBytes());
+				al_draw_text(debug_font_, al_map_rgb(255, 255, 255), 0.0f, 24.0f, 0, "Performance:");
+				al_draw_textf(debug_font_, al_map_rgb(255, 255, 255), 0.0f, 36.0f, 0, "Frame %f ms", frametime * 1000.0);
+				al_draw_textf(debug_font_, al_map_rgb(255, 255, 255), 0.0f, 48.0f, 0, "Fps %.1f", fps);
 				al_flip_display();
+				++frames;
 			}
+
 			if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
 			{
 				break;
