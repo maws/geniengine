@@ -38,6 +38,7 @@ set_target_properties(GeniEngine2_Framework PROPERTIES OUTPUT_NAME_RELEASE GeniE
 
 add_definitions(-DALLEGRO_STATICLINK)
 target_link_libraries (GeniEngine2_Framework allegro-5.0.10-monolith-static-md.lib)
+target_link_libraries (GeniEngine2_Framework freetype-2.4.8-static-md.lib)
 target_link_libraries (GeniEngine2_Framework winmm.lib)
 target_link_libraries (GeniEngine2_Framework gdiplus.lib)
 target_link_libraries (GeniEngine2_Framework psapi.lib)
