@@ -6,8 +6,12 @@ namespace GeniEngine
 {
 	Allocator& defaultAllocator();
 
-	void init();
-	void shutdown();
+	namespace Memory
+	{
+		void init();
+		void shutdown();
+	}
+	
 
 	/// \brief Make sure the pointer has proper alignment
 	/// if not, align the ptr using simple ptr arithmetics
@@ -17,7 +21,7 @@ namespace GeniEngine
 		const size_t offset = addr % alignment;
 		if (offset)
 		{
-			addr += (alignment - offset);
+			addr += static_cast<unsigned>((alignment - offset));
 		}
 		return reinterpret_cast<void*>(addr);
 	}

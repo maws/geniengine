@@ -30,20 +30,23 @@ namespace GeniEngine
 
 			// Keep track of memory block header
 			MemoryHead* head = static_cast<MemoryHead*>(malloc(total));
+			head->size = total;
 
 			// Keep track of actual memory data
-			void* data = ++head;
-			data = forceAlign(data, align);
+			void* data = forceAlign(head + 1, align);
 
 			// Fill memory
 			// Set header size and pad end of data
-			head->size = total;
 			size_t* p = reinterpret_cast<size_t*>(head + 1);
-			while (p < data)
+			while (p != data)
 			{
 				// Max size
 				*p++ = static_cast<size_t>(-1);
 			}
+
+			allocated_bytes_ += total;
+			++num_allocations_;
+
 			return data;
 		}
 
@@ -53,28 +56,38 @@ namespace GeniEngine
 				return;
 
 			MemoryHead* head = locateMemoryHead(ptr);
-			total_size_ = head->size;
+			allocated_bytes_ -= head->size;
+			--num_allocations_;
 			free(head);
 		}
 
-		virtual size_t allocatedSize(void* ptr) override
+		virtual size_t getAllocatedSize(void* ptr) override
 		{
 			MemoryHead* head = locateMemoryHead(ptr);
 			return head->size;
+		}
+
+		virtual size_t getNumAllocatedBytes() override
+		{
+			return allocated_bytes_;
 		}
 
 	private:
 		inline MemoryHead* locateMemoryHead(void* ptr)
 		{
 			size_t* addr = reinterpret_cast<size_t*>(ptr);
-			while (*(addr - 1) == static_cast<size_t>(-1))
+			--addr;
+
+			while (*addr == static_cast<size_t>(-1))
 			{
 				--addr;
 			}
 
-			return reinterpret_cast<MemoryHead*>(addr - 1);
+			return reinterpret_cast<MemoryHead*>(addr);
 		}
-		size_t total_size_;
+		size_t allocated_bytes_;
+		unsigned num_allocations_;
+
 	};
 
 	const size_t defaultHeapAllocatorSize = sizeof(DefaultHeapAllocator);
@@ -89,17 +102,20 @@ namespace GeniEngine
 		return *defaultHeapAllocator;
 	}
 
-	void init()
+	namespace Memory
 	{
-		// For being able to include different allocators
-		// TODO: Add different allocators
-		unsigned* ptr = buffer;
-		defaultHeapAllocator = new (ptr)DefaultHeapAllocator();
-	}
+		void init()
+		{
+			// For being able to include different allocators
+			// TODO: Add different allocators
+			unsigned* ptr = buffer;
+			defaultHeapAllocator = new (ptr)DefaultHeapAllocator();
+		}
 
-	void shutdown()
-	{
-		defaultHeapAllocator->~DefaultHeapAllocator();
-		defaultHeapAllocator = nullptr;
+		void shutdown()
+		{
+			defaultHeapAllocator->~DefaultHeapAllocator();
+			defaultHeapAllocator = nullptr;
+		}
 	}
 }

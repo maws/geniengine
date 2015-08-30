@@ -35,8 +35,6 @@ namespace GeniEngine
 
 	void Renderer::render()
 	{
-		al_clear_to_color(al_map_rgb(0, 0, 0));
-
 		static float rotation = 0.0f;
 		rotation += 0.01f;
 		master_->rotate(rotation);
@@ -47,7 +45,5 @@ namespace GeniEngine
 		}
 
 		root_->draw();
-
-		al_flip_display();
 	}
 }
