@@ -11,6 +11,7 @@ namespace GeniEngine
 	public:
 		using SpritePtr = std::unique_ptr < Sprite > ;
 		Sprite(const char* path);
+		Sprite(ALLEGRO_BITMAP* bitmap);
 		virtual ~Sprite();
 
 		virtual void draw() override;

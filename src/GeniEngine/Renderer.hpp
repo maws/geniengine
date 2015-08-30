@@ -3,7 +3,7 @@
 #include "Node.hpp"
 #include "Sprite.hpp"
 
-#define NUM_NODES 100
+#define NUM_NODES 400
 
 namespace GeniEngine 
 {

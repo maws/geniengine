@@ -9,9 +9,14 @@ namespace GeniEngine
 		bitmap_ = al_load_bitmap(path);
 	}
 
+	Sprite::Sprite(ALLEGRO_BITMAP* bitmap)
+	{
+		bitmap_ = bitmap;
+	}
+
 	Sprite::~Sprite()
 	{
-		al_destroy_bitmap(bitmap_);
+		//al_destroy_bitmap(bitmap_);
 	}
 
 	void Sprite::draw()
