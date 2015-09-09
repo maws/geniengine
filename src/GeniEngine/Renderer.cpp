@@ -23,8 +23,8 @@ namespace GeniEngine
 		for (int i = 1; i < NUM_NODES; ++i)
 		{
 			auto node = std::unique_ptr<Sprite>(new Sprite(bitmap));
-			node->scale(.8f);
-			node->translate(30.0f, 30.0f);
+			node->scale(1.0f);
+			node->translate(15.0f, 15.0f);
 			nodes[i] = nodes[i-1]->addChild(std::move(node));
 		}
 
