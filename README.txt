@@ -1,3 +1,5 @@
-Welcome to the official GeniEngine repository. 
+Welcome to the experimental GeniEngine repository. 
 
-GeniEngine is a simple game engine based on open source code, feel free to clone/fork. The current framework will not compile on any platform but windows, so far.
+This is a testing ground for new ideas for GeniEngine
+
+GeniEngine is a simple 2d game engine based on open source code.

@@ -5,10 +5,36 @@
 
 #include "Sprite.hpp"
 
+#include <thread>
+#include <functional>
+
+struct AsyncAsset
+{
+	AsyncAsset(char* fileName)
+	{
+		bitmap = al_load_bitmap("assets/factory.png");
+		abitmap = nullptr;
+		std::thread th(&AsyncAsset::Load, this, fileName, std::ref(abitmap));
+		th.join();
+	}
+
+	void Load(char* fileName, ALLEGRO_BITMAP* bitmap)
+	{
+		bitmap = al_load_bitmap(fileName);
+	}
+	
+	ALLEGRO_BITMAP* bitmap;
+	ALLEGRO_BITMAP* abitmap;
+};
+
+
 namespace GeniEngine
 {
 	Renderer::Renderer()
 	{	
+		// Create test asset
+		asset_ = new AsyncAsset("assets/factory.png");
+
 		// al_hold_bitmap_demo
 		// complete with memory leaks
 		auto bitmap = al_load_bitmap("assets/icon64.png");
@@ -49,6 +75,12 @@ namespace GeniEngine
 
 		al_hold_bitmap_drawing(true);
 		root_->draw();
+		if (asset_->abitmap == nullptr)
+			al_draw_bitmap(asset_->bitmap, 100.0f, 100.0f, 0);
+		else
+		{
+			al_draw_bitmap(asset_->abitmap, 100.0f, 100.0f, 0);
+		}
 		al_hold_bitmap_drawing(false);
 	}
 }

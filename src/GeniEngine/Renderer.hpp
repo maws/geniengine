@@ -5,6 +5,8 @@
 
 #define NUM_NODES 1500
 
+struct AsyncAsset;
+
 namespace GeniEngine 
 {
 	class Renderer
@@ -16,6 +18,7 @@ namespace GeniEngine
 		void render();
 
 	private:
+		AsyncAsset* asset_;
 		Node* root_;
 
 		Node* master_;
